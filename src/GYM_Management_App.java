@@ -21,7 +21,6 @@ import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
 
@@ -37,13 +36,9 @@ public class GYM_Management_App extends Application {
 
     private static final String GYM_NAME = "TITAN-FORGE";
 
-    private static final String DEFAULT_DB_URL      = "jdbc:mysql://127.0.0.1:3306/dump?serverTimezone=UTC";
-    private static final String DEFAULT_DB_USER     = "root";
-    private static final String DEFAULT_DB_PASSWORD = "nivyan";
-
-    private static final String DB_URL      = readConfig("GYM_DB_URL", "gym.db.url", DEFAULT_DB_URL);
-    private static final String DB_USER     = readConfig("GYM_DB_USER", "gym.db.user", DEFAULT_DB_USER);
-    private static final String DB_PASSWORD = readConfig("GYM_DB_PASSWORD", "gym.db.password", DEFAULT_DB_PASSWORD);
+    private static final String DB_URL      = "jdbc:mysql://127.0.0.1:3306/dump?serverTimezone=UTC";
+    private static final String DB_USER     = "root";
+    private static final String DB_PASSWORD = "nivyan";
     private Connection conn;
 
     private String currentUserRole = "";
@@ -55,20 +50,6 @@ public class GYM_Management_App extends Application {
             "\"Don't stop when you're tired. Stop when you're done.\"",
             "\"Your body can stand almost anything. It's your mind that you have to convince.\""
     };
-
-    private static String readConfig(String envName, String propertyName, String defaultValue) {
-        String propertyValue = System.getProperty(propertyName);
-        if (propertyValue != null && !propertyValue.isBlank()) {
-            return propertyValue;
-        }
-
-        String envValue = System.getenv(envName);
-        if (envValue != null && !envValue.isBlank()) {
-            return envValue;
-        }
-
-        return defaultValue;
-    }
 
 
     @Override
@@ -94,10 +75,7 @@ public class GYM_Management_App extends Application {
         // Background Layer
         VBox backgroundLayer = new VBox();
         try {
-            URL bgResource = GYM_Management_App.class.getResource("/player/gym_bg.jpg");
-            Image img = bgResource != null
-                    ? new Image(bgResource.toExternalForm())
-                    : new Image(new FileInputStream("gym/player/gym_bg.jpg"));
+            Image img = new Image(new FileInputStream("gym_bg.jpg"));
             BackgroundImage bgImg = new BackgroundImage(img,
                     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                     BackgroundPosition.CENTER,
